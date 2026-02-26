@@ -1,4 +1,3 @@
-
 import re
 import streamlit as st
 import pandas as pd
@@ -22,33 +21,33 @@ st.set_page_config(
 # ─────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Special+Elite&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lato:wght@300;400;700&family=Share+Tech+Mono&display=swap');
 
-/* ── palette ── */
+/* ── pastel palette ── */
 :root {
-    --red:    #CC1512;
-    --amber:  #E87C2B;
-    --yellow: #F5C518;
-    --green:  #27AE60;
-    --dark:   #090909;
-    --panel:  #111118;
-    --card:   #16161F;
-    --border: #2A1A1A;
-    --text:   #E8D5C0;
-    --muted:  #7A6A5A;
+    --rose:    #D4788A;
+    --amber:   #C4956A;
+    --sage:    #7BAE8E;
+    --lavender:#8A7BAE;
+    --dark:    #FAF7F4;
+    --panel:   #F3EDE8;
+    --card:    #EDE7E0;
+    --border:  #D8CEC6;
+    --text:    #3D3530;
+    --muted:   #9A8880;
 }
 
 /* ── global ── */
 html, body, [class*="css"] {
     background-color: var(--dark) !important;
     color: var(--text) !important;
-    font-family: 'Special Elite', serif;
+    font-family: 'Lato', sans-serif;
 }
 
 /* ── sidebar ── */
 section[data-testid="stSidebar"] {
     background: var(--panel) !important;
-    border-right: 2px solid var(--border);
+    border-right: 1px solid var(--border);
 }
 section[data-testid="stSidebar"] * { color: var(--text) !important; }
 section[data-testid="stSidebar"] .stRadio label { font-size: 0.95rem !important; }
@@ -57,9 +56,9 @@ section[data-testid="stSidebar"] .stRadio label { font-size: 0.95rem !important;
 h1 {
     font-family: 'Bebas Neue', sans-serif !important;
     font-size: 3.4rem !important;
-    color: var(--red) !important;
+    color: var(--rose) !important;
     letter-spacing: 5px;
-    text-shadow: 0 0 24px #CC151266, 0 2px 0 #000;
+    text-shadow: none;
 }
 h2 {
     font-family: 'Bebas Neue', sans-serif !important;
@@ -70,7 +69,7 @@ h2 {
 }
 h3 {
     font-family: 'Bebas Neue', sans-serif !important;
-    color: var(--yellow) !important;
+    color: var(--lavender) !important;
     letter-spacing: 2px;
 }
 
@@ -78,11 +77,11 @@ h3 {
 [data-testid="stMetric"] {
     background: var(--card) !important;
     border: 1px solid var(--border) !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     padding: 18px !important;
 }
 [data-testid="stMetricValue"] {
-    color: var(--amber) !important;
+    color: var(--rose) !important;
     font-family: 'Bebas Neue', sans-serif !important;
     font-size: 2.4rem !important;
 }
@@ -101,12 +100,12 @@ label {
 
 /* ── buttons ── */
 .stButton > button {
-    background: var(--red) !important;
+    background: var(--rose) !important;
     color: #fff !important;
     font-family: 'Bebas Neue', sans-serif !important;
     letter-spacing: 2px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 8px 24px;
     transition: background 0.2s;
 }
@@ -119,15 +118,15 @@ label {
     font-size: 0.85rem !important;
 }
 .stTabs [aria-selected="true"] {
-    color: var(--yellow) !important;
-    border-bottom: 2px solid var(--yellow) !important;
+    color: var(--rose) !important;
+    border-bottom: 2px solid var(--rose) !important;
 }
 
 /* ── custom components ── */
 .hero {
-    background: linear-gradient(160deg, #1A0000 0%, #090909 60%);
-    border: 1px solid var(--red);
-    border-radius: 10px;
+    background: linear-gradient(160deg, #F5EDE8 0%, #EDE3DC 100%);
+    border: 1px solid var(--rose);
+    border-radius: 12px;
     padding: 36px 44px;
     text-align: center;
     margin-bottom: 28px;
@@ -148,43 +147,43 @@ label {
 }
 
 .insight-box {
-    background: linear-gradient(135deg, #180A0A, #14100A);
+    background: linear-gradient(135deg, #EDE7E0, #E8DDD6);
     border: 1px solid var(--amber);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 16px 22px;
     margin: 14px 0;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.87rem;
-    color: var(--amber);
-    line-height: 1.7;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.8;
 }
 
 .quote-card {
     background: var(--card);
-    border-left: 4px solid var(--red);
-    border-radius: 0 6px 6px 0;
+    border-left: 4px solid var(--rose);
+    border-radius: 0 8px 8px 0;
     padding: 14px 18px;
     margin: 10px 0;
-    font-family: 'Special Elite', serif;
+    font-family: 'Lato', sans-serif;
     font-size: 0.95rem;
     line-height: 1.65;
 }
-.qc-pos { border-left-color: var(--green)  !important; }
-.qc-neg { border-left-color: var(--red)    !important; }
-.qc-neu { border-left-color: var(--yellow) !important; }
+.qc-pos { border-left-color: var(--sage)     !important; }
+.qc-neg { border-left-color: var(--rose)     !important; }
+.qc-neu { border-left-color: var(--lavender) !important; }
 
 .badge {
     display: inline-block;
     padding: 2px 10px;
-    border-radius: 4px;
+    border-radius: 12px;
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.72rem;
     color: #fff;
     margin-right: 6px;
 }
-.badge-pos { background: var(--green); }
-.badge-neg { background: var(--red);   }
-.badge-neu { background: #7A6A2A;      }
+.badge-pos { background: var(--sage);     }
+.badge-neg { background: var(--rose);     }
+.badge-neu { background: var(--lavender); }
 
 .keyword-pill {
     display: inline-block;
@@ -209,7 +208,7 @@ label {
 
 .empty-box {
     border: 1px dashed var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 32px;
     text-align: center;
     color: var(--muted);
@@ -226,7 +225,7 @@ hr { border-color: var(--border) !important; margin: 20px 0 !important; }
     gap: 8px;
     padding: 20px;
     background: var(--card);
-    border-radius: 8px;
+    border-radius: 10px;
     border: 1px solid var(--border);
     min-height: 120px;
     align-content: flex-start;
@@ -238,10 +237,10 @@ hr { border-color: var(--border) !important; margin: 20px 0 !important; }
 #  CONSTANTS
 # ─────────────────────────────────────────────────────────────
 SENT_COLORS = {
-    "Positive": "#27AE60",
-    "Neutral":  "#F5C518",
-    "Negative": "#CC1512",
-    "Unknown":  "#555566",
+    "Positive": "#7BAE8E",
+    "Neutral":  "#8A7BAE",
+    "Negative": "#D4788A",
+    "Unknown":  "#B0A09A",
 }
 
 THEME_ICONS = {
@@ -343,15 +342,15 @@ def load_data(path: str = "stranger_things_final.csv") -> pd.DataFrame:
 #  UTILITY FUNCTIONS
 # ─────────────────────────────────────────────────────────────
 def pdark(legend=True):
-    """Return a dict of Plotly layout overrides for dark theme."""
+    """Return a dict of Plotly layout overrides for pastel light theme."""
     d = dict(
         plot_bgcolor  = "rgba(0,0,0,0)",
         paper_bgcolor = "rgba(0,0,0,0)",
-        font_color    = "#E8D5C0",
-        font_family   = "Special Elite",
+        font_color    = "#3D3530",
+        font_family   = "Lato",
     )
     if legend:
-        d["legend"] = dict(bgcolor="rgba(0,0,0,0)", font=dict(color="#E8D5C0"))
+        d["legend"] = dict(bgcolor="rgba(0,0,0,0)", font=dict(color="#3D3530"))
     return d
 
 
@@ -402,7 +401,7 @@ def wordcloud_html(texts: list, max_words: int = 70) -> str:
     if not freq:
         return '<div class="wc-wrap"><span style="color:var(--muted)">Not enough text data.</span></div>'
     max_f  = freq[0][1]
-    colours = ["#CC1512", "#E87C2B", "#F5C518", "#E8D5C0", "#9A7A5A", "#7A6A8A"]
+    colours = ["#D4788A", "#C4956A", "#8A7BAE", "#7BAE8E", "#A89080", "#9A8AAE"]
     html   = '<div class="wc-wrap">'
     for word, count in freq:
         size = 11 + int((count / max_f) * 30)
@@ -471,7 +470,7 @@ SOURCES    = sorted(df["source"].dropna().unique().tolist())
 with st.sidebar:
     st.markdown("## 🔦 STRANGER THINGS")
     st.markdown(
-        "<p style='font-family:Share Tech Mono;font-size:0.72rem;color:#7A6A5A;'>"
+        "<p style='font-family:Share Tech Mono;font-size:0.72rem;color:#9A8880;'>"
         "FAN THEORY INTELLIGENCE SYSTEM</p>",
         unsafe_allow_html=True,
     )
@@ -492,7 +491,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown(
-        "<p style='font-family:Share Tech Mono;font-size:0.72rem;color:#7A6A5A;'>"
+        "<p style='font-family:Share Tech Mono;font-size:0.72rem;color:#9A8880;'>"
         "GLOBAL FILTERS</p>",
         unsafe_allow_html=True,
     )
@@ -518,7 +517,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown(
-        f"<p style='font-family:Share Tech Mono;font-size:0.7rem;color:#7A6A5A;'>"
+        f"<p style='font-family:Share Tech Mono;font-size:0.7rem;color:#9A8880;'>"
         f"📊 {len(df):,} total discussions<br>"
         f"🧠 {len(THEMES)} theory clusters<br>"
         f"🌐 {len(SOURCES)} data source(s)</p>",
@@ -572,7 +571,7 @@ if page == "🏠 Home & Overview":
         fig = px.bar(
             tc, x="Count", y="Theme", orientation="h",
             color="Count",
-            color_continuous_scale=["#2A1A1A", "#CC1512", "#F5C518"],
+            color_continuous_scale=["#EDE7E0", "#D4788A", "#8A7BAE"],
             text="Count",
         )
         fig.update_traces(textfont_color="#fff", textposition="outside")
@@ -606,7 +605,7 @@ if page == "🏠 Home & Overview":
     fig3 = px.bar(
         src_c, x="Source", y="Count",
         color="Count",
-        color_continuous_scale=["#2A1A1A", "#E87C2B", "#F5C518"],
+        color_continuous_scale=["#EDE7E0", "#C4956A", "#D4788A"],
         text="Count",
     )
     fig3.update_traces(textfont_color="#fff", textposition="outside")
@@ -644,7 +643,7 @@ elif page == "🗂️ Theme Breakdown":
         fig = px.bar(
             tc, x="Theme", y="Count",
             color="Count",
-            color_continuous_scale=["#2A1A1A", "#CC1512", "#F5C518"],
+            color_continuous_scale=["#EDE7E0", "#D4788A", "#8A7BAE"],
             text="Count",
         )
         fig.update_traces(textfont_color="#fff", textposition="outside")
@@ -660,7 +659,7 @@ elif page == "🗂️ Theme Breakdown":
         st.markdown("### 🥧 Theme Share")
         fig2 = px.pie(
             tc, names="Theme", values="Count",
-            color_discrete_sequence=["#CC1512","#E87C2B","#F5C518","#27AE60","#7A6A8A"],
+            color_discrete_sequence=["#D4788A","#C4956A","#8A7BAE","#7BAE8E","#A89080"],
             hole=0.38,
         )
         fig2.update_traces(
@@ -1002,7 +1001,7 @@ elif page == "✨ Fun Insights":
             z=heat.values,
             x=heat.columns.tolist(),
             y=heat.index.tolist(),
-            colorscale=[[0, "#090909"], [0.4, "#CC1512"], [1, "#F5C518"]],
+            colorscale=[[0, "#F3EDE8"], [0.4, "#D4788A"], [1, "#8A7BAE"]],
             text=heat.values,
             texttemplate="%{text}",
             textfont={"color": "#fff", "size": 13},
@@ -1041,7 +1040,7 @@ elif page == "✨ Fun Insights":
         emo_by_theme, x="pct_emotional", y="theme",
         orientation="h",
         color="pct_emotional",
-        color_continuous_scale=["#2A1A1A", "#CC1512", "#F5C518"],
+        color_continuous_scale=["#EDE7E0", "#C4956A", "#D4788A"],
         text=emo_by_theme["pct_emotional"].astype(str) + "%",
     )
     fig_emo.update_traces(textfont_color="#fff", textposition="outside")
@@ -1073,11 +1072,11 @@ elif page == "✨ Fun Insights":
         size="total", color="theme",
         text="theme",
         size_max=55,
-        color_discrete_sequence=["#CC1512","#E87C2B","#F5C518","#27AE60","#7A6A8A"],
+        color_discrete_sequence=["#D4788A","#C4956A","#8A7BAE","#7BAE8E","#A89080"],
     )
     fig_pn.update_traces(
         textposition="top center",
-        textfont_color="#E8D5C0",
+        textfont_color="#3D3530",
         textfont_size=11,
         marker_opacity=0.85,
     )
@@ -1099,7 +1098,7 @@ elif page == "✨ Fun Insights":
     fig_box = px.box(
         fdf_len, x="theme", y="text_len",
         color="theme",
-        color_discrete_sequence=["#CC1512","#E87C2B","#F5C518","#27AE60","#7A6A8A"],
+        color_discrete_sequence=["#D4788A","#C4956A","#8A7BAE","#7BAE8E","#A89080"],
     )
     fig_box.update_layout(
         **pdark(),
@@ -1191,7 +1190,7 @@ elif page == "📋 Conclusion":
 
     st.markdown("---")
     st.markdown(
-        "<p style='font-family:Share Tech Mono;font-size:0.75rem;color:#7A6A5A;text-align:center;'>"
+        "<p style='font-family:Share Tech Mono;font-size:0.75rem;color:#9A8880;text-align:center;'>"
         "Built with Streamlit · pandas · Plotly · scikit-learn · Pure CSS Word Cloud<br>"
         "Data sourced from Kaggle fan discussions · Stranger Things Fandom</p>",
         unsafe_allow_html=True,
